@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, permissions
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -18,11 +18,18 @@ class WalletDetailView(APIView):
         return Response(WalletSerializer(wallet).data)
 
 
-class RechargeListCreateView(generics.ListCreateAPIView):
-    serializer_class = RechargeSerializer
+class RechargeListCreateView(APIView):
+    def get(self, request):
+        recharges = RechargeTransaction.objects.filter(user=request.user)
+        return Response(RechargeSerializer(recharges, many=True).data)
 
-    def get_queryset(self):
-        return RechargeTransaction.objects.filter(user=self.request.user)
+    def post(self, request):
+        serializer = RechargeSerializer(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class RechargeCallbackView(APIView):

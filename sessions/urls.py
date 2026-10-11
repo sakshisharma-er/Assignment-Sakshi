@@ -12,10 +12,10 @@ from .views import (
 
 urlpatterns = [
     path("", ConsultationSessionListCreateView.as_view(), name="session-list-create"),
-    path("<int:pk>/", ConsultationSessionDetailView.as_view(), name="session-detail"),
-    path("<int:pk>/assign/", AssignSessionView.as_view(), name="session-assign"),
-    path("<int:pk>/accept/", AcceptSessionView.as_view(), name="session-accept"),
-    path("<int:pk>/start/", StartSessionView.as_view(), name="session-start"),
-    path("<int:pk>/end/", EndSessionView.as_view(), name="session-end"),
-    path("<int:pk>/bill/", BillSessionView.as_view(), name="session-bill"),
+    path("<uuid:pk>/", ConsultationSessionDetailView.as_view(), name="session-detail"),
+    path("<uuid:pk>/assign/", AssignSessionView.as_view(), name="session-assign"),
+    path("<uuid:pk>/accept/", AcceptSessionView.as_view(), name="session-accept"),
+    path("<uuid:pk>/start/", StartSessionView.as_view(), name="session-start"),
+    path("<uuid:pk>/end/", EndSessionView.as_view(), name="session-end"),
+    path("<uuid:pk>/bill/", BillSessionView.as_view(), name="session-bill"),
 ]

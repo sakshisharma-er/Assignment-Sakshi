@@ -1,9 +1,13 @@
+import uuid
+
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
 
 
 class ConsultationSession(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+
     class Status(models.TextChoices):
         UNASSIGNED = "unassigned", "Unassigned"
         ASSIGNED = "assigned", "Assigned"
@@ -60,6 +64,7 @@ class ConsultationSession(models.Model):
 
 
 class SessionCharge(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     session = models.ForeignKey(
         ConsultationSession, on_delete=models.CASCADE, related_name="charges"
     )

@@ -39,7 +39,7 @@ class AuthenticationAPITests(APITestCase):
         )
         profile = self.client.get("/api/auth/me/")
         self.assertEqual(profile.status_code, status.HTTP_200_OK)
-        self.assertEqual(profile.data["id"], user.pk)
+        self.assertEqual(profile.data["id"], str(user.pk))
         self.assertEqual(profile.data["role"], User.Role.PROVIDER)
 
     def test_profile_requires_authentication(self):
